@@ -7,10 +7,10 @@ by [Andrew Brampton](http://bramp.net) 2012
 
 Extension by Rockie
 -------
-Create a Simple delivery.sh file to package
-Run delivery.sh (only support on mac)
-Copy the delivery directory to what ever your like
-Copy the template.html to a new sequence file
+* Create a Simple delivery.sh file to package
+* Run delivery.sh (only support on mac)
+* Copy the delivery directory to what ever your like
+* Copy the template.html to a new sequence file
 
 
 Example
