@@ -23,21 +23,19 @@
             <div class="diagram" ID="diagram">This should be a diagram! If you don't see it you need Javascript enabled</div>
         </td>
         <td>
-            <h3>Editing the sequence text below</h3>
-
             <div class="editor-wrapper">
                 <div class="editor">
-participant Andrew
-participant China
-participant Dummy
+                    participant Andrew
+                    participant China
+                    participant Dummy
 
-Title: Here is a title
-Andrew->China: Says Hello
-Note right of China: China thinks\nabout it
-Note left of China: Left China
-Note over Dummy: Dummy Says nothing
-China-->Andrew: How are you?
-Andrew->>China: I am good thanks!
+                    Title: Here is a title
+                    Andrew->China: Says Hello
+                    Note right of China: China thinks\nabout it
+                    Note left of China: Left China
+                    Note over Dummy: Dummy Says nothing
+                    China-->Andrew: How are you?
+                    Andrew->>China: I am good thanks!
                 </div>
             </div>
             Theme:
@@ -46,22 +44,26 @@ Andrew->>China: I am good thanks!
                 <option value="hand" selected>Hand drawn</option>
             </select>
             <button id="export" type="button">Export</button>
-            <div>
-                <ul>
-                    <li>copy the template.html a new file for sequence</li>
-                    <li>edit the sequence text until get the sequence you want</li>
-                    <li>zoom to the size as you want</li>
-                    <li>take screen shot Shift+Command+4 on MAC</li>
-                    <li>or export the SVG file</li>
-                    <li>copy the text in the editor into the html file, the dir class ="editor" part</li>
-                </ul>
-            </div>
-            <a href="https://github.com/bramp/js-sequence-diagrams">js-sequence-diagrams created by bramp</a>
+
         </td>
 
     </tr>
-</table>
 
+</table>
+<table>
+    <tr>
+        <div>
+            <ul>
+                <li>copy the template.html a new file for sequence</li>
+                <li>edit the sequence text until get the sequence you want</li>
+                <li>zoom to the size as you want</li>
+                <li>take screen shot or export (Shift+Command+4 on MAC)</li>
+                <li>copy the text in the editor into the html file, the dir class ="editor" part</li>
+            </ul>
+        </div>
+        <a href="https://github.com/bramp/js-sequence-diagrams">js-sequence-diagrams created by bramp</a>
+    </tr>
+</table>
 
 <script src="scripts/jquery.min.js"></script>
 

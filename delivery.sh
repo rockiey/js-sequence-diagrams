@@ -1,11 +1,15 @@
 #!/bin/sh
 
+make
+
 rm -rf delivery
 
 mkdir delivery
 mkdir delivery/scripts
 mkdir delivery/css
 mkdir delivery/images
+
+make
 
 cp -rf fonts delivery
 
@@ -19,11 +23,12 @@ cp src/sequence-diagram.js delivery/scripts
 cp sequence-diagram-min.js delivery/scripts
 
 cp test/template.html delivery
-
+cp test/style.css delivery/css/style.css
 
 curl html5shiv.googlecode.com/svn/trunk/html5.js --O delivery/scripts/html5.js
 
-curl bramp.github.com/js-sequence-diagrams/css/style.css --O delivery/css/style.css
+#curl bramp.github.com/js-sequence-diagrams/css/style.css --O delivery/css/style.css
+
 curl bramp.github.com/js-sequence-diagrams/images/body-bg.jpg --O delivery/images/body-bg.jpg
 curl bramp.github.com/js-sequence-diagrams/images/header-bg.jpg --O delivery/images/header-bg.jpg
 curl bramp.github.com/js-sequence-diagrams/images/sidebar-bg.jpg --O delivery/images/sidebar-bg.jpg
