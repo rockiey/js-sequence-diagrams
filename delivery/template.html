@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet" type="text/css">
+
+    <!--[if lt IE 9]>
+    <script src="scripts/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen"/>
+
+    <title>js-sequence-diagrams by bramp</title>
+</head>
+
+<body>
+
+<table align="center" class="inner">
+    <tr>
+        <td>
+            <div class="diagram" ID="diagram">This should be a diagram! If you don't see it you need Javascript enabled</div>
+        </td>
+        <td>
+            <div class="editor-wrapper">
+                <div class="editor">
+participant Andrew
+participant China
+participant Dummy
+
+Title: Here is a title
+Andrew->China: Says Hello
+Note right of China: China thinks\nabout it
+Note left of China: Left China
+Note over Dummy: Dummy Says nothing
+China-->Andrew: How are you?
+Andrew->>China: I am good thanks!
+                </div>
+            </div>
+            Theme:
+            <select class="theme">
+                <option value="simple">Simple</option>
+                <option value="hand" selected>Hand drawn</option>
+            </select>
+            <button id="export" type="button">Export</button>
+
+        </td>
+
+    </tr>
+
+</table>
+<table>
+    <tr>
+        <div>
+            <ul>
+                <li>copy the template.html a new file for sequence</li>
+                <li>edit the sequence text until get the sequence you want</li>
+                <li>zoom to the size as you want</li>
+                <li>take screen shot or export (Shift+Command+4 on MAC)</li>
+                <li>copy the text in the editor into the html file, the dir class ="editor" part</li>
+            </ul>
+        </div>
+        <a href="https://github.com/bramp/js-sequence-diagrams">js-sequence-diagrams created by bramp</a>
+    </tr>
+</table>
+
+<script src="scripts/jquery.min.js"></script>
+
+<!-- Needed for the text editor -->
+<script src="scripts/ace.js" type="text/javascript"
+        charset="utf-8"></script>
+
+<script src="scripts/underscore-min.js"></script>
+<script src="scripts/raphael-min.js"></script>
+
+<script src="scripts/sequence-diagram-min.js"></script>
+<script src="scripts/svgfix-0.2.js"></script>
+
+<script>
+
+    function setup_editor(div) {
+
+        var editor_div = $(".editor");
+        var diagram_div = $(".diagram");
+        var theme_div = $(".theme");
+
+        // Setup the editor diagram
+        var editor = ace.edit(editor_div.get(0));
+        editor.setTheme("ace/theme/crimson_editor");
+        editor.getSession().setMode("ace/mode/asciidoc");
+        editor.getSession().on('change', _.debounce(on_change, 100));
+
+        var theme = theme_div.change(on_change);
+        on_change();
+
+        function on_change() {
+            try {
+                var diagram = Diagram.parse(editor.getValue());
+
+                editor.getSession().setAnnotations([]);
+
+                // Clear out old diagram
+                diagram_div.html('');
+
+                var options = {
+                    theme: theme.val(),
+                    scale: 1
+                };
+
+                // Draw
+                diagram.drawSVG(diagram_div.get(0), options);
+
+            } catch (err) {
+                var annotation = {
+                    type: "error", // also warning and information
+                    column: 0,
+                    row: 0,
+                    text: err.message
+                };
+                if (err instanceof Diagram.ParseError) {
+                    annotation.row = err.loc.first_line - 1;
+                    annotation.column = err.loc.first_column;
+                }
+                editor.getSession().setAnnotations([annotation]);
+                throw err;
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        // Example diagrams
+        //$('.diagram').sequenceDiagram();
+
+        // Setup all the editors
+        setup_editor($('#demo'));
+
+        $('#export').click(function () {
+            // http://phpepe.com/2012/07/export-raphael-graphic-to-image.html
+            // http://stackoverflow.com/questions/4086703/convert-raphael-svg-to-image-png-etc-client-side
+            var canvas_ = $('#diagram svg').get(0);
+            var text = svgfix((new XMLSerializer()).serializeToString(canvas_));
+            var encodedText = encodeURIComponent(text);
+            open("data:image/svg+xml," + encodedText);
+
+        });
+    });
+</script>
+
+
+</body>
+</html>
